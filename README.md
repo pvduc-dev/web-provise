@@ -71,3 +71,37 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 ## License
 
 Nest is [MIT licensed](LICENSE).
+```
+fragment CompanyChildren on Company {
+  id
+  name
+  children {
+    id
+    name
+  }
+}
+
+fragment CompanyRecursive on Company {
+  children {
+    ...CompanyChildren
+    children {
+      ...CompanyChildren
+      children {
+        ...CompanyChildren
+        children {
+        ...CompanyChildren
+      }
+      }
+    }
+  }
+}
+
+
+
+query Companies($companiesId: String!) {
+  companies(id: $companiesId) {
+    ...CompanyChildren,
+    ...CompanyRecursive
+  }
+}
+```
