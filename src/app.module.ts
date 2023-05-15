@@ -15,8 +15,8 @@ import { CompanyModule } from '@/company/company.module';
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       autoSchemaFile: true,
-      playground: false,
-      plugins: [ApolloServerPluginLandingPageLocalDefault()],
+      playground: true,
+      // plugins: [ApolloServerPluginLandingPageLocalDefault()],
     }),
     SharedModule,
     CompanyModule,
