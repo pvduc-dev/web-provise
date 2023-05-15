@@ -130,18 +130,21 @@ describe('CompanyService', () => {
         {
           id: 'uuid-1',
           name: 'Webprovise Corp',
+          createdAt: '2021-02-26T00:55:36.632Z',
           parentId: '0',
           cost: 2247,
           children: [
             {
               id: 'uuid-2',
               name: 'Stamm LLC',
+              createdAt: '2021-02-25T10:35:32.978Z',
               parentId: 'uuid-1',
               cost: 1026,
               children: [
                 {
                   id: 'uuid-4',
                   name: 'Price and Sons',
+                  createdAt: '2021-02-25T06:11:47.519Z',
                   parentId: 'uuid-2',
                   cost: 0,
                   children: [],
@@ -151,6 +154,7 @@ describe('CompanyService', () => {
             {
               id: 'uuid-3',
               name: 'Blanda, Langosh and Barton',
+              createdAt: '2021-02-25T15:16:30.887Z',
               parentId: 'uuid-1',
               cost: 0,
               children: [],

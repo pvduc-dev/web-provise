@@ -21,7 +21,7 @@ export class CompanyResolver {
       this.travelService.fetchTravels(),
     ]).pipe(
       map(([companies, travels]) =>
-        this.companyService.getCompanyChildren(companies, travels),
+        this.companyService.getCompanyChildren(companies, travels, '0'),
       ),
     );
   }
