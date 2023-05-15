@@ -15,10 +15,10 @@ $ yarn start
 
 ```bash
 # unit tests
-$ npm run test
+$ yarn test
 
 # unit test coverage
-$ npm run test:cov
+$ yarn test:cov
 ```
 ## Graphql query for test
 ```
@@ -26,10 +26,12 @@ fragment CompanyData on CompanyDto {
   id
   name
   parentId
-  cost
+  createdAt
+  cost,
   children {
     id
     name
+    createdAt
     parentId
     cost
   }
@@ -56,7 +58,6 @@ query Query {
     }
   }
 }
-
 ```
 ## Graphql response
 ```json
