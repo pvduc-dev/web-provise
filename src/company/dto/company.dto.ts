@@ -11,6 +11,9 @@ export class CompanyDto {
   @Field(() => String)
   name: string;
 
+  @Field(() => String)
+  createdAt: string;
+
   @Field(() => Int)
   cost: number;
 

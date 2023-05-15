@@ -1,16 +1,8 @@
-import {
-  Args,
-  ID,
-  Parent,
-  Query,
-  ResolveField,
-  Resolver,
-} from '@nestjs/graphql';
+import { Query, Resolver } from '@nestjs/graphql';
 import { CompanyService } from '@/company/company.service';
-import { map, Observable, of } from 'rxjs';
-import { CompanyDto } from '@/company/dto/company.dto';
+import { combineLatest, map, Observable } from 'rxjs';
 import { TravelService } from '@/travel/travel.service';
-import { Company } from '@/company/models/company.model';
+import { CompanyDto } from '@/company/dto/company.dto';
 
 @Resolver(() => CompanyDto)
 export class CompanyResolver {
@@ -24,17 +16,13 @@ export class CompanyResolver {
    */
   @Query(() => [CompanyDto])
   public companies(): Observable<Record<string, any>[]> {
-    return this.companyService
-      .getCompanies()
-      .pipe(
-        map<Company[], Record<string, any>[]>((companies) =>
-          this.companyService.buildTree(companies, '0'),
-        ),
-      );
+    return combineLatest([
+      this.companyService.fetchCompanies(),
+      this.travelService.fetchTravels(),
+    ]).pipe(
+      map(([companies, travels]) =>
+        this.companyService.getCompanyChildren(companies, travels),
+      ),
+    );
   }
-
-  // public cost(@Parent() companyDto: CompanyDto) {
-  //   const { id } = companyDto;
-  //   return this.travelService.getCostByCompanyId(id);
-  // }
 }

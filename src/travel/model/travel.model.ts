@@ -5,5 +5,5 @@ export class Travel {
   departure: string;
   destination: string;
   price: string;
-  createdAt: Date;
+  createdAt: string;
 }

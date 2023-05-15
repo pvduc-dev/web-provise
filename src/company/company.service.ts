@@ -4,41 +4,49 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { AxiosResponse } from 'axios';
 import { Company } from '@/company/models/company.model';
+import { TravelService } from '@/travel/travel.service';
 
 @Injectable()
 export class CompanyService {
-  private readonly companyEndpoint = '/companies';
-
-  constructor(private readonly httpService: HttpService) {}
+  constructor(
+    private readonly httpService: HttpService,
+    private readonly travelService: TravelService,
+  ) {}
 
   /**
    * @author Pv Duc
    */
-  public getCompanies(): Observable<Company[]> {
+  public fetchCompanies(): Observable<Company[]> {
     return this.httpService
       .get('/companies')
       .pipe(map<AxiosResponse, Company[]>((res) => res.data));
   }
 
-  /**
-   * @param flattenArr
-   * @param parentId
-   * @param cost
-   * @author PvDuc
-   */
-  public buildTree(
-    flattenArr: Company[],
+  public getCompanyChildren(
+    companies: Company[],
+    travels = [],
     parentId = '0',
-    cost = 0,
-  ): Array<any> {
-    return [
-      ...flattenArr
-        .filter((company: Company) => company.parentId === parentId)
-        .map((child: Company) => ({
-          ...child,
-          children: this.buildTree(flattenArr, child.id),
-          cost: 0,
-        })),
-    ];
+  ) {
+    return companies
+      .filter((company: Company) => company.parentId === parentId)
+      .map((child: Company) => ({
+        ...child,
+        cost: this.getCompanyCost(companies, travels, child.id),
+        children: this.getCompanyChildren(companies, travels, child.id),
+      }));
+  }
+
+  private getCompanyCost(companies, travels, parentId) {
+    const companyIds = [parentId, ...this.getUnderCompany(companies, parentId)];
+    return this.travelService.getCostByCompanyIds(travels, companyIds);
+  }
+
+  private getUnderCompany(companies, companyId) {
+    return companies.reduce((acc, curr) => {
+      if (curr.parentId === companyId) {
+        return [...acc, curr.id, ...this.getUnderCompany(companies, curr.id)];
+      }
+      return acc;
+    }, []);
   }
 }
