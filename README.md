@@ -1,73 +1,234 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
-
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
-
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
-
-## Description
-
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
-
+# Web Provide Interview
+[Graphql playground demo here!](https://web-provise-production.up.railway.app/graphql)
 ## Installation
 
 ```bash
-$ yarn install
+$ yarn
 ```
-
 ## Running the app
 
 ```bash
 # development
-$ yarn run start
-
-# watch mode
-$ yarn run start:dev
-
-# production mode
-$ yarn run start:prod
+$ yarn start
 ```
-
 ## Test
 
 ```bash
 # unit tests
-$ yarn run test
+$ npm run test
 
-# e2e tests
-$ yarn run test:e2e
-
-# test coverage
-$ yarn run test:cov
+# unit test coverage
+$ npm run test:cov
 ```
+## Graphql query for test
+```
+fragment CompanyData on CompanyDto {
+  id
+  name
+  parentId
+  cost
+  children {
+    id
+    name
+    parentId
+    cost
+  }
+}
 
-## Support
+query Query {
+  companies {
+    ...CompanyData
+    children {
+      ...CompanyData
+      children {
+        ...CompanyData
+        children {
+          ...CompanyData
+          children {
+            ...CompanyData
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+            children {
+              ...CompanyData
+            }
+          }
+        }
+      }
+    }
+  }
+}
 
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
+```
+## Graphql response
+```json
+{
+  "data": {
+    "companies": [
+      {
+        "id": "uuid-1",
+        "name": "Webprovise Corp",
+        "parentId": "0",
+        "createdAt": "2021-02-26T00:55:36.632Z",
+        "cost": 52983,
+        "children": [
+          {
+            "id": "uuid-2",
+            "name": "Stamm LLC",
+            "createdAt": "2021-02-25T10:35:32.978Z",
+            "parentId": "uuid-1",
+            "cost": 5199,
+            "children": [
+              {
+                "id": "uuid-4",
+                "name": "Price and Sons",
+                "createdAt": "2021-02-25T06:11:47.519Z",
+                "parentId": "uuid-2",
+                "cost": 1340,
+                "children": []
+              },
+              {
+                "id": "uuid-7",
+                "name": "Zieme - Mills",
+                "createdAt": "2021-02-25T07:56:32.335Z",
+                "parentId": "uuid-2",
+                "cost": 1636,
+                "children": []
+              },
+              {
+                "id": "uuid-19",
+                "name": "Schneider - Adams",
+                "createdAt": "2021-02-25T21:06:18.777Z",
+                "parentId": "uuid-2",
+                "cost": 794,
+                "children": []
+              }
+            ]
+          },
+          {
+            "id": "uuid-3",
+            "name": "Blanda, Langosh and Barton",
+            "createdAt": "2021-02-25T15:16:30.887Z",
+            "parentId": "uuid-1",
+            "cost": 15713,
+            "children": [
+              {
+                "id": "uuid-5",
+                "name": "Hane - Windler",
+                "createdAt": "2021-02-25T13:35:57.923Z",
+                "parentId": "uuid-3",
+                "cost": 1288,
+                "children": []
+              },
+              {
+                "id": "uuid-6",
+                "name": "Vandervort - Bechtelar",
+                "createdAt": "2021-02-26T01:41:06.479Z",
+                "parentId": "uuid-3",
+                "cost": 2512,
+                "children": []
+              },
+              {
+                "id": "uuid-9",
+                "name": "Kuhic - Swift",
+                "createdAt": "2021-02-25T16:02:49.099Z",
+                "parentId": "uuid-3",
+                "cost": 3086,
+                "children": []
+              },
+              {
+                "id": "uuid-17",
+                "name": "Rohan, Mayer and Haley",
+                "createdAt": "2021-02-25T11:17:52.132Z",
+                "parentId": "uuid-3",
+                "cost": 4072,
+                "children": []
+              },
+              {
+                "id": "uuid-20",
+                "name": "Kunde, Armstrong and Hermann",
+                "createdAt": "2021-02-26T01:51:25.421Z",
+                "parentId": "uuid-3",
+                "cost": 908,
+                "children": []
+              }
+            ]
+          },
+          {
+            "id": "uuid-8",
+            "name": "Bartell - Mosciski",
+            "createdAt": "2021-02-25T23:47:57.596Z",
+            "parentId": "uuid-1",
+            "cost": 28817,
+            "children": [
+              {
+                "id": "uuid-10",
+                "name": "Lockman Inc",
+                "createdAt": "2021-02-26T01:39:33.438Z",
+                "parentId": "uuid-8",
+                "cost": 4288,
+                "children": []
+              },
+              {
+                "id": "uuid-11",
+                "name": "Parker - Shanahan",
+                "createdAt": "2021-02-26T00:32:01.307Z",
+                "parentId": "uuid-8",
+                "cost": 12236,
+                "children": [
+                  {
+                    "id": "uuid-12",
+                    "name": "Swaniawski Inc",
+                    "createdAt": "2021-02-25T06:44:56.245Z",
+                    "parentId": "uuid-11",
+                    "cost": 2110,
+                    "children": []
+                  },
+                  {
+                    "id": "uuid-14",
+                    "name": "Weimann, Runolfsson and Hand",
+                    "createdAt": "2021-02-25T15:22:08.098Z",
+                    "parentId": "uuid-11",
+                    "cost": 7254,
+                    "children": []
+                  }
+                ]
+              },
+              {
+                "id": "uuid-13",
+                "name": "Balistreri - Bruen",
+                "createdAt": "2021-02-25T20:45:53.518Z",
+                "parentId": "uuid-8",
+                "cost": 1686,
+                "children": []
+              },
+              {
+                "id": "uuid-15",
+                "name": "Predovic and Sons",
+                "createdAt": "2021-02-25T18:00:26.864Z",
+                "parentId": "uuid-8",
+                "cost": 4725,
+                "children": []
+              },
+              {
+                "id": "uuid-16",
+                "name": "Weissnat - Murazik",
+                "createdAt": "2021-02-26T01:50:50.354Z",
+                "parentId": "uuid-8",
+                "cost": 3277,
+                "children": []
+              }
+            ]
+          },
+          {
+            "id": "uuid-18",
+            "name": "Walter, Schmidt and Osinski",
+            "createdAt": "2021-02-26T02:31:22.154Z",
+            "parentId": "uuid-1",
+            "cost": 2033,
+            "children": []
+          }
+        ]
+      }
+    ]
+  }
+}
+```
